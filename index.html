@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YoutubeGPT — AI YouTube Video Summarizer</title>
+  <link rel="icon" type="image/png" href="icons/icon32.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #fafafa;
+      --text: #1a1a1a;
+      --text-muted: #666;
+      --accent: #ef4444;
+      --border: #e5e5e5;
+      --card: #fff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0a;
+        --text: #f5f5f5;
+        --text-muted: #999;
+        --accent: #ef4444;
+        --border: #262626;
+        --card: #141414;
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .cta {
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.85;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--card);
+    }
+
+    section {
+      padding: 48px 0;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .features {
+      display: grid;
+      gap: 16px;
+    }
+
+    .feature {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: transform 0.2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-2px);
+    }
+
+    .feature h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feature p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .icon {
+      font-size: 1.25rem;
+    }
+
+    .providers {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .provider {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .install {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+    }
+
+    .steps {
+      counter-reset: step;
+      list-style: none;
+    }
+
+    .steps li {
+      position: relative;
+      padding-left: 48px;
+      margin-bottom: 20px;
+      color: var(--text-muted);
+    }
+
+    .steps li:last-child {
+      margin-bottom: 0;
+    }
+
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .highlight {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+
+    .highlight strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 48px 0 64px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    footer a:hover {
+      border-bottom-color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .tagline {
+        font-size: 1.1rem;
+      }
+
+      header {
+        padding: 48px 0 32px;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .install {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <img src="icons/icon128.png" alt="YoutubeGPT" class="logo">
+      <h1>YoutubeGPT</h1>
+      <p class="tagline">Summarize YouTube videos instantly with AI. No login required — just bring your own API key.</p>
+      <div class="cta">
+        <a href="#install" class="btn btn-primary">Install Extension</a>
+        <a href="https://github.com/ps06756/youtube-summary-chrome-extension" class="btn btn-secondary">View on GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <h2>Features</h2>
+        <div class="features">
+          <div class="feature">
+            <h3><span class="icon">📝</span> Transcript-Based</h3>
+            <p>Uses the video's existing captions and subtitles for instant summarization. No audio processing needed.</p>
+          </div>
+          <div class="feature">
+            <h3><span class="icon">🔒</span> Privacy First</h3>
+            <p>Your API key stays in your browser. No accounts, no tracking, no data collection — ever.</p>
+          </div>
+          <div class="feature">
+            <h3><span class="icon">🎨</span> Clean Sidebar</h3>
+            <p>A collapsible sidebar appears directly on YouTube video pages. Dark theme matches YouTube's interface.</p>
+          </div>
+          <div class="feature">
+            <h3><span class="icon">⚡</span> SPA-Aware</h3>
+            <p>Works seamlessly when navigating between videos. No page reloads needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top: 0;">
+      <div class="container">
+        <h2>Supported AI Providers</h2>
+        <p style="color: var(--text-muted);">Choose your preferred AI provider. The extension works with all major models:</p>
+        <div class="providers">
+          <span class="provider">Anthropic Claude</span>
+          <span class="provider">OpenAI GPT-4o</span>
+          <span class="provider">Google Gemini</span>
+          <span class="provider">OpenAI-Compatible APIs</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="install">
+      <div class="container">
+        <h2>Installation</h2>
+        <div class="install">
+          <ol class="steps">
+            <li>Download or clone this repository from GitHub</li>
+            <li>Open Chrome and navigate to <code>chrome://extensions/</code></li>
+            <li>Enable <strong>Developer mode</strong> (toggle in top-right)</li>
+            <li>Click <strong>Load unpacked</strong> and select the project folder</li>
+          </ol>
+          <div class="highlight">
+            <strong>Next:</strong> Click the extension icon, select your AI provider, and enter your API key. Then open any YouTube video and click the toggle button to summarize.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2>How It Works</h2>
+        <div class="features">
+          <div class="feature">
+            <h3><span class="icon">1️⃣</span> Open a YouTube Video</h3>
+            <p>Navigate to any video with captions or subtitles available.</p>
+          </div>
+          <div class="feature">
+            <h3><span class="icon">2️⃣</span> Click Summarize</h3>
+            <p>The extension fetches the transcript and sends it to your chosen AI provider.</p>
+          </div>
+          <div class="feature">
+            <h3><span class="icon">3️⃣</span> Get Your Summary</h3>
+            <p>Receive a structured summary with Overview, Key Points, and Takeaways.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Licensed under <a href="LICENSE">AGPL-3.0</a> • <a href="privacy.html">Privacy Policy</a></p>
+    </div>
+  </footer>
+</body>
+</html>
