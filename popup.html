@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h2>YouTube Summarizer</h2>
+    <p class="subtitle">Summarize YouTube videos with AI</p>
+    <hr />
+
+    <!-- Step 1: Provider -->
+    <div id="step-provider">
+      <label for="provider-select">Provider</label>
+      <select id="provider-select">
+        <option value="" disabled selected>Select a provider...</option>
+        <option value="anthropic">Anthropic</option>
+        <option value="openai">OpenAI Compatible</option>
+      </select>
+    </div>
+
+    <!-- Step 2: Model -->
+    <div id="step-model" style="display:none;">
+      <label for="model-select">Model</label>
+      <select id="model-select"></select>
+      <input type="text" id="custom-model-input" placeholder="Enter model name..." style="display:none; margin-top:6px;" />
+    </div>
+
+    <!-- Step 3: Credentials -->
+    <div id="step-credentials" style="display:none;">
+      <div id="base-url-group" style="display:none;">
+        <label for="base-url-input">Base URL</label>
+        <input type="text" id="base-url-input" placeholder="https://api.openai.com/v1" />
+      </div>
+      <label for="api-key-input" id="api-key-label">API Key</label>
+      <input type="password" id="api-key-input" placeholder="sk-..." />
+    </div>
+
+    <div class="btn-row">
+      <button id="popup-save-btn">Save</button>
+      <button id="popup-clear-btn" class="secondary">Clear</button>
+    </div>
+    <p id="popup-status"></p>
+    <hr />
+    <p class="hint">Open any YouTube video and click the toggle button to summarize.</p>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
