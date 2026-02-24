@@ -1,0 +1,258 @@
+/* ===== Sidebar ===== */
+
+#yt-summarizer-sidebar {
+  position: fixed;
+  top: 0;
+  right: -360px;
+  width: 350px;
+  height: 100vh;
+  background: #1a1a1a;
+  color: #e0e0e0;
+  z-index: 9999;
+  transition: right 0.3s ease;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#yt-summarizer-sidebar.yts-open {
+  right: 0;
+}
+
+/* ===== Header ===== */
+
+.yts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #212121;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+
+.yts-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#yts-close-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+#yts-close-btn:hover {
+  color: #fff;
+}
+
+/* ===== Body ===== */
+
+.yts-body {
+  padding: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ===== API Key Section ===== */
+
+#yts-api-key-section label {
+  font-size: 13px;
+  color: #aaa;
+}
+
+#yts-api-key-input {
+  width: 100%;
+  padding: 8px 10px;
+  background: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+
+#yts-api-key-input:focus {
+  outline: none;
+  border-color: #3ea6ff;
+}
+
+.yts-key-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.yts-key-row input {
+  flex: 1;
+}
+
+#yts-save-key-btn {
+  background: #3ea6ff;
+  color: #000;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+#yts-save-key-btn:hover {
+  background: #65b8ff;
+}
+
+.yts-link-btn {
+  background: none;
+  border: none;
+  color: #3ea6ff;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 0;
+  margin-top: 4px;
+}
+
+.yts-link-btn:hover {
+  text-decoration: underline;
+}
+
+/* ===== Divider ===== */
+
+.yts-divider {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 16px 0;
+}
+
+/* ===== Summarize Button ===== */
+
+#yts-summarize-btn {
+  width: 100%;
+  background: #3ea6ff;
+  color: #000;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+#yts-summarize-btn:hover:not(:disabled) {
+  background: #65b8ff;
+}
+
+#yts-summarize-btn:disabled {
+  background: #555;
+  color: #999;
+  cursor: not-allowed;
+}
+
+/* ===== Loading ===== */
+
+#yts-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  color: #aaa;
+}
+
+.yts-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #555;
+  border-top-color: #3ea6ff;
+  border-radius: 50%;
+  animation: yts-spin 0.8s linear infinite;
+}
+
+@keyframes yts-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ===== Error ===== */
+
+#yts-error {
+  color: #ff6b6b;
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+/* ===== Summary Content ===== */
+
+#yts-summary {
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+#yts-summary h2,
+#yts-summary h3,
+#yts-summary h4 {
+  color: #fff;
+  margin: 14px 0 6px;
+}
+
+#yts-summary h2 {
+  font-size: 16px;
+}
+
+#yts-summary h3 {
+  font-size: 15px;
+}
+
+#yts-summary h4 {
+  font-size: 14px;
+}
+
+#yts-summary ul {
+  padding-left: 20px;
+  margin: 6px 0;
+}
+
+#yts-summary li {
+  margin: 4px 0;
+}
+
+#yts-summary strong {
+  color: #fff;
+}
+
+#yts-summary p {
+  margin: 8px 0;
+}
+
+/* ===== Toggle Button ===== */
+
+#yts-toggle-btn {
+  position: fixed;
+  right: 16px;
+  top: 80px;
+  z-index: 10000;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #212121;
+  border: 1px solid #444;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#yts-toggle-btn:hover {
+  background: #333;
+}
